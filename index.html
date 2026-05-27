@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aravinthan R — Supply Chain & Data Analytics</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --accent: #00d4aa;
+    --accent2: #3b82f6;
+    --accent3: #f59e0b;
+    --text: #e8edf5;
+    --muted: #6b7a99;
+    --border: rgba(255,255,255,0.07);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* Background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,170,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,170,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 4rem;
+    background: rgba(10,14,26,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,212,170,0.12) 0%, transparent 70%);
+    top: 50%; left: 60%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    animation: pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+    50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+  }
+
+  .hero-content { max-width: 700px; position: relative; }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    padding: 0.4rem 1rem;
+    border: 1px solid rgba(0,212,170,0.3);
+    border-radius: 2px;
+    animation: fadeUp 0.8s ease forwards;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: blink 1.5s infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 1rem;
+    animation: fadeUp 0.8s ease 0.1s both;
+  }
+
+  .hero h1 span {
+    display: block;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 500px;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.8s ease 0.2s both;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-bottom: 3rem;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+
+  .stat-item { text-align: left; }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    animation: fadeUp 0.8s ease 0.4s both;
+  }
+
+  .btn-primary {
+    padding: 0.9rem 2rem;
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-primary:hover {
+    background: #00f0c0;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,212,170,0.3);
+  }
+
+  .btn-outline {
+    padding: 0.9rem 2rem;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTIONS */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 4rem;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    margin-bottom: 3rem;
+    line-height: 1.15;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .about-text p {
+    color: var(--muted);
+    font-size: 1rem;
+    margin-bottom: 1.2rem;
+    line-height: 1.8;
+  }
+
+  .about-text p strong { color: var(--text); font-weight: 500; }
+
+  .about-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+
+  .expertise-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .expertise-list li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .expertise-list li::before {
+    content: '▹';
+    color: var(--accent);
+    font-size: 0.8rem;
+    flex-shrink: 0;
+  }
+
+  /* SKILLS */
+  .skills-section { background: var(--surface); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .skill-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skill-card:hover {
+    border-color: rgba(0,212,170,0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  }
+
+  .skill-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .skill-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  .skill-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .skill-bar-wrap {
+    margin-top: 1.2rem;
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .skill-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 2px;
+    animation: barGrow 1.5s ease forwards;
+    transform-origin: left;
+  }
+
+  @keyframes barGrow {
+    from { width: 0; }
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: default;
+  }
+
+  .project-card:hover {
+    border-color: rgba(0,212,170,0.25);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    transform: translateY(-5px);
+  }
+
+  .project-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .project-card:hover::after { transform: scaleX(1); }
+
+  .project-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    margin-bottom: 1.2rem;
+  }
+
+  .project-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    line-height: 1.2;
+  }
+
+  .project-desc {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-result {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(0,212,170,0.08);
+    border: 1px solid rgba(0,212,170,0.2);
+    padding: 0.4rem 0.9rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    font-size: 0.72rem;
+    color: var(--muted);
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--border);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+
+  /* TOOLS */
+  .tools-section { background: var(--surface); }
+
+  .tools-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .tool-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.7rem 1.3rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    font-size: 0.85rem;
+    color: var(--text);
+    transition: all 0.3s;
+  }
+
+  .tool-badge:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .tool-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .tool-dot.blue { background: var(--accent2); }
+  .tool-dot.amber { background: var(--accent3); }
+
+  /* EXPERIENCE */
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding: 0 0 3rem 2rem;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -0.4rem; top: 0.4rem;
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 12px rgba(0,212,170,0.5);
+  }
+
+  .timeline-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-role {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+
+  .timeline-company {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .timeline-points {
+    list-style: none;
+  }
+
+  .timeline-points li {
+    font-size: 0.88rem;
+    color: var(--muted);
+    padding: 0.3rem 0;
+    padding-left: 1.2rem;
+    position: relative;
+  }
+
+  .timeline-points li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 0.7rem;
+  }
+
+  /* CONTACT */
+  .contact-section {
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-section::before {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .contact-section .section-title { margin-bottom: 1rem; }
+
+  .contact-sub {
+    color: var(--muted);
+    font-size: 1rem;
+    margin-bottom: 3rem;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 1rem 2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.88rem;
+    transition: all 0.3s;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+
+  .contact-link:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,212,170,0.15);
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid var(--border);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* DIVIDER */
+  .section-divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    margin-bottom: 3rem;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 7rem 1.5rem 4rem; }
+    .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">AR // Portfolio</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Available for opportunities</div>
+    <h1>
+      Aravinthan R
+      <span>Supply Chain &<br>Data Analytics</span>
+    </h1>
+    <p class="hero-subtitle">
+      Specialist in procurement, supply chain optimization, and data-driven insights — turning complex operations into measurable business outcomes.
+    </p>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-number">8+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">20+</div>
+        <div class="stat-label">Projects Delivered</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">2-3M₹Cr</div>
+        <div class="stat-label">Cost Savings Driven</div>
+      </div>
+    </div>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">View My Work</a>
+      <a href="#contact" class="btn-outline">Get In Touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">// 01 — About</div>
+  <div class="about-grid">
+    <div class="about-text">
+      <h2 class="section-title">Bridging Operations<br>with Intelligence</h2>
+      <p>I am a <strong>Supply Chain & Procurement Specialist</strong> with 6–10 years of hands-on experience in end-to-end procurement, vendor management, and logistics optimization across diverse industries.</p>
+      <p>My edge lies in combining <strong>operational depth</strong> with <strong>data analytics</strong> — using Power BI and Excel to transform raw supply chain data into strategic decisions that reduce costs, improve lead times, and strengthen supplier relationships.</p>
+      <p>I thrive at the intersection of <strong>process improvement</strong> and <strong>analytical storytelling</strong>, helping organizations move from reactive firefighting to proactive, insight-driven supply chain management.</p>
+    </div>
+    <div class="about-card">
+      <p class="section-label" style="margin-bottom: 1.5rem;">// Core Competencies</p>
+      <ul class="expertise-list">
+        <li>End-to-End Procurement & Strategic Sourcing</li>
+        <li>Vendor Evaluation & Supplier Relationship Management</li>
+        <li>Inventory Planning & Demand Forecasting</li>
+        <li>Supply Chain Risk Assessment & Mitigation</li>
+        <li>Data Visualization with Power BI</li>
+        <li>Advanced Excel Modelling & Dashboards</li>
+        <li>KPI Reporting & Performance Analytics</li>
+        <li>Cost Optimization & Spend Analysis</li>
+        <li>Contract Management & Negotiation</li>
+        <li>ERP Systems & Digital Procurement Tools</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="skills-section">
+  <div class="section-label">// 02 — Skills</div>
+  <h2 class="section-title">Technical Expertise</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <span class="skill-icon">📊</span>
+      <div class="skill-name">Microsoft Excel</div>
+      <div class="skill-desc">Advanced formulas, pivot tables, dynamic dashboards, VLOOKUP/INDEX-MATCH, Power Query, macro automation for supply chain reporting.</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" style="width: 95%"></div></div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-icon">📈</span>
+      <div class="skill-name">Power BI</div>
+      <div class="skill-desc">Interactive dashboards, DAX measures, data modelling, real-time procurement & inventory KPI monitoring, executive reports.</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" style="width: 88%"></div></div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-icon">🔗</span>
+      <div class="skill-name">Supply Chain Management</div>
+      <div class="skill-desc">Demand planning, inventory optimization, logistics coordination, S&OP processes, supplier onboarding and performance tracking.</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" style="width: 92%"></div></div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-icon">🛒</span>
+      <div class="skill-name">Procurement & Sourcing</div>
+      <div class="skill-desc">Strategic sourcing, RFQ/RFP management, vendor negotiation, contract drafting, spend analysis and category management.</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" style="width: 94%"></div></div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-icon">📉</span>
+      <div class="skill-name">Data Analysis</div>
+      <div class="skill-desc">Spend analytics, variance analysis, trend identification, root cause analysis, actionable reporting for leadership decision-making.</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" style="width: 87%"></div></div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-icon">⚙️</span>
+      <div class="skill-name">Process Improvement</div>
+      <div class="skill-desc">Lean principles, SOP development, procurement workflow automation, cross-functional collaboration and change management.</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" style="width: 85%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">// 03 — Projects</div>
+  <h2 class="section-title">Key Deliverables</h2>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-number">PROJECT — 01</div>
+      <div class="project-title">Procurement Spend Dashboard</div>
+      <p class="project-desc">Built an end-to-end Power BI dashboard consolidating spend data across 50+ vendors, enabling real-time category spend tracking and supplier performance scoring for procurement leadership.</p>
+      <div class="project-result">📉 Identified 18% cost-saving opportunities</div>
+      <div class="project-tags">
+        <span class="tag">Power BI</span>
+        <span class="tag">DAX</span>
+        <span class="tag">Spend Analysis</span>
+        <span class="tag">Procurement</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-number">PROJECT — 02</div>
+      <div class="project-title">Inventory Optimization Model</div>
+      <p class="project-desc">Developed an advanced Excel model integrating demand forecasting, safety stock calculations, and reorder point automation — reducing stockouts and excess inventory simultaneously.</p>
+      <div class="project-result">📦 30% reduction in excess inventory</div>
+      <div class="project-tags">
+        <span class="tag">Excel</span>
+        <span class="tag">Power Query</span>
+        <span class="tag">Forecasting</span>
+        <span class="tag">Inventory</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-number">PROJECT — 03</div>
+      <div class="project-title">Supplier Performance Scorecard</div>
+      <p class="project-desc">Designed a dynamic supplier evaluation framework with automated scoring for quality, delivery, pricing, and compliance — used monthly by procurement teams for vendor review meetings.</p>
+      <div class="project-result">🤝 Improved on-time delivery by 22%</div>
+      <div class="project-tags">
+        <span class="tag">Excel</span>
+        <span class="tag">Power BI</span>
+        <span class="tag">SRM</span>
+        <span class="tag">KPIs</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-number">PROJECT — 04</div>
+      <div class="project-title">Supply Chain Risk Analytics</div>
+      <p class="project-desc">Created a risk heatmap and monitoring report in Power BI identifying critical single-source dependencies and geopolitical risk exposure, enabling proactive mitigation planning.</p>
+      <div class="project-result">⚡ Reduced supply disruption incidents by 40%</div>
+      <div class="project-tags">
+        <span class="tag">Power BI</span>
+        <span class="tag">Risk Analysis</span>
+        <span class="tag">Supply Chain</span>
+        <span class="tag">Reporting</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section class="tools-section">
+  <div class="section-label">// 04 — Tools & Technologies</div>
+  <h2 class="section-title">My Toolkit</h2>
+  <p style="color: var(--muted); margin-bottom: 2.5rem; font-size: 0.9rem;">Platforms and tools I use daily to deliver supply chain and analytics solutions.</p>
+  <div class="tools-row">
+    <div class="tool-badge"><span class="tool-dot"></span>Microsoft Excel</div>
+    <div class="tool-badge"><span class="tool-dot blue"></span>Power BI</div>
+    <div class="tool-badge"><span class="tool-dot"></span>Power Query</div>
+    <div class="tool-badge"><span class="tool-dot blue"></span>DAX</div>
+    <div class="tool-badge"><span class="tool-dot amber"></span>SAP</div>
+    <div class="tool-badge"><span class="tool-dot"></span>Oracle ERP</div>
+  </div>
+  <div class="tools-row">
+    <div class="tool-badge"><span class="tool-dot amber"></span>SharePoint</div>
+    <div class="tool-badge"><span class="tool-dot blue"></span>MS Teams</div>
+    <div class="tool-badge"><span class="tool-dot"></span>Tableau</div>
+    <div class="tool-badge"><span class="tool-dot amber"></span>MS Access</div>
+    <div class="tool-badge"><span class="tool-dot blue"></span>Ariba</div>
+    <div class="tool-badge"><span class="tool-dot"></span>Coupa</div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">// 05 — Experience</div>
+  <h2 class="section-title">Career Timeline</h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-period">2020 — PRESENT</div>
+      <div class="timeline-role">Senior Supply Chain & Procurement Specialist</div>
+      <div class="timeline-company">Current Organization · Full-time</div>
+      <ul class="timeline-points">
+        <li>Lead strategic sourcing and vendor negotiations across multiple categories, delivering consistent cost savings.</li>
+        <li>Build and maintain Power BI dashboards for procurement KPIs, spend analytics, and supplier performance.</li>
+        <li>Oversee end-to-end procurement cycles from requisition to payment, ensuring compliance and efficiency.</li>
+        <li>Drive inventory optimization initiatives reducing carrying costs while maintaining service levels.</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-period">2017 — 2020</div>
+      <div class="timeline-role">Supply Chain Analyst</div>
+      <div class="timeline-company">Previous Organization · Full-time</div>
+      <ul class="timeline-points">
+        <li>Developed advanced Excel models for demand forecasting and inventory planning across product categories.</li>
+        <li>Coordinated with logistics partners to improve delivery performance and reduce lead times.</li>
+        <li>Produced weekly and monthly supply chain performance reports for management review.</li>
+        <li>Supported supplier onboarding, evaluation, and contract management processes.</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-period">2015 — 2017</div>
+      <div class="timeline-role">Procurement Executive</div>
+      <div class="timeline-company">Previous Organization · Full-time</div>
+      <ul class="timeline-points">
+        <li>Managed purchase orders, vendor correspondence, and procurement documentation.</li>
+        <li>Assisted in RFQ/RFP preparation and vendor comparison analysis using Excel.</li>
+        <li>Maintained accurate records in ERP systems and ensured timely material delivery.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="section-label" style="text-align:center">// 06 — Contact</div>
+  <h2 class="section-title">Let's Work Together</h2>
+  <p class="contact-sub">Open to new opportunities, collaborations, and consulting projects in supply chain, procurement, or data analytics.</p>
+  <div class="contact-links">
+    <a href="mailto:aravinthanspm@gmail.com" class="contact-link">
+      ✉ Email Me
+    </a>
+    <a href="https://www.linkedin.com/in/aravinthan-r-106999136/" target="_blank" class="contact-link">
+      in LinkedIn
+    </a>
+    <a href="R_Aravinthan.pdf" class="contact-link" download>
+  ↓ Download CV
+</a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Aravinthan R — Supply Chain & Procurement Specialist · Data Analyst</p>
+  <p style="margin-top: 0.4rem; font-size: 0.65rem;">Built with precision. Designed with intent.</p>
+</footer>
+
+<script>
+  // Smooth scroll animation on sections
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('section').forEach(section => {
+    section.style.opacity = '0';
+    section.style.transform = 'translateY(30px)';
+    section.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+    observer.observe(section);
+  });
+
+  // Active nav link highlight
+  window.addEventListener('scroll', () => {
+    const sections = document.querySelectorAll('section[id]');
+    const links = document.querySelectorAll('.nav-links a');
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    links.forEach(link => {
+      link.style.color = link.getAttribute('href') === '#' + current ? 'var(--accent)' : '';
+    });
+  });
+</script>
+</body>
+</html>
